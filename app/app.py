@@ -13,9 +13,9 @@ CONF = get_config(CONFIGFILE).configuation
 
 import tradfricoap.device
 
-ikea_devices, plugs, blinds, groups, others, batteries = get_sorted_devices(groups=True)
+ikea_devices, plugs, blinds, groups, others, batteries = tradfricoap.device.get_sorted_devices(groups=True)
 
-supergroup = next(filter(lambda x: x.Description == "SuperGroup", groups), None)
+supergroup = next(filter(lambda x: x.Name == "SuperGroup", groups), None)
 assert supergroup is not None, "SuperGroup not found"
 
 
@@ -50,7 +50,7 @@ def kelder_close():
 
 app = Flask(__name__)
 
-shared_dict, shared_lock = get_shared_state("127.0.0.1", 35791, None)
+shared_dict, shared_lock = get_shared_state("127.0.0.1", 35791, b'not secret')
 
 shared_dict["last_state"] = 'unknown'
 
