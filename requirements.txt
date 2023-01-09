@@ -6,7 +6,6 @@ itsdangerous==2.1.2
 Jinja2==3.1.2
 MarkupSafe==2.1.1
 py3coap==0.9.4
-sqlite3==0.0.0
 tradfricoap==0.1.0
 Werkzeug==2.1.2
 zipp==3.8.0
