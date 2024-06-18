@@ -7,6 +7,7 @@ import subprocess
 from enum import Enum
 import appdirs, argparse
 from tradfricoap.config import get_config, host_config, ConfigNotFoundError
+import traceback
 
 CONFIGFILE = "{0}/gateway.json".format(appdirs.user_config_dir(appname="tradfri"))
 CONF = get_config(CONFIGFILE).configuation
@@ -63,9 +64,12 @@ def doorkeeper():
         if content['why'] == 'state':
             new_lock_state = content['val']
             if new_lock_state != shared_dict['last_state']:
-                 if new_lock_state == LockState.OPEN.value:
-                     kelder_open()
-                 elif new_lock_state == LockState.LOCKED.value:
-                     kelder_close()
+                try:
+                    if new_lock_state == LockState.OPEN.value:
+                        kelder_open()
+                    elif new_lock_state == LockState.LOCKED.value:
+                        kelder_close()
+                except:
+                    return f"kelderapi crash\n{traceback.format_exc()}", 500
             shared_dict['last_state'] = new_lock_state
     return "OK"
