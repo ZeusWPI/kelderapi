@@ -5,27 +5,13 @@ from multiprocessing import Lock
 from multiprocessing.managers import AcquirerProxy, BaseManager, DictProxy
 import subprocess
 from enum import Enum
-import appdirs, argparse
-from tradfricoap.config import get_config, host_config, ConfigNotFoundError
 import traceback
-
-CONFIGFILE = "{0}/gateway.json".format(appdirs.user_config_dir(appname="tradfri"))
-CONF = get_config(CONFIGFILE).configuation
-
-import tradfricoap.device
-
-ikea_devices, plugs, blinds, groups, others, batteries = tradfricoap.device.get_sorted_devices(groups=True)
-
-supergroup = next(filter(lambda x: x.Name == "SuperGroup", groups), None)
-assert supergroup is not None, "SuperGroup not found"
-
-
+import paho.mqtt.publish as publish
 
 class LockState(Enum):
     LOCKED = '0'
     OPEN = '1'
     INBETWEEN = '2'
-
 
 def get_shared_state(host, port, key):
     shared_dict = {}
@@ -42,11 +28,11 @@ def get_shared_state(host, port, key):
 
 def kelder_open():
     subprocess.Popen(["cvlc", "--play-and-exit", "--no-loop", "bootup.m4a"])
-    supergroup.State = 1
+    publish.single("zigbee2mqtt/all/set", "on", hostname="localhost")
 
 def kelder_close():
     subprocess.Popen(["cvlc", "--play-and-exit", "--no-loop", "shutdown.m4a"])
-    supergroup.State = 0
+    publish.single("zigbee2mqtt/all/set", "off", hostname="localhost")
 
 
 app = Flask(__name__)
