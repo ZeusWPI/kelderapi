@@ -27,11 +27,11 @@ def get_shared_state(host, port, key):
     return manager.get_dict(), manager.get_lock()
 
 def kelder_open():
-    subprocess.Popen(["cvlc", "--play-and-exit", "--no-loop", "bootup.m4a"])
+    subprocess.Popen(["mpv", "bootup.m4a"])
     publish.single("zigbee2mqtt/all/set", "on", hostname="localhost")
 
 def kelder_close():
-    subprocess.Popen(["cvlc", "--play-and-exit", "--no-loop", "shutdown.m4a"])
+    subprocess.Popen(["mpv", "shutdown.m4a"])
     publish.single("zigbee2mqtt/all/set", "off", hostname="localhost")
 
 

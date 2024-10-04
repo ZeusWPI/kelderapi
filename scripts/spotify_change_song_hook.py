@@ -2,7 +2,7 @@
 import os
 import requests
 
-if "PLAYER_EVENT" not in os.environ or os.environ["PLAYER_EVENT"] != "play":
+if "PLAYER_EVENT" not in os.environ or os.environ["PLAYER_EVENT"] != "playing":
     exit(0)
 
 try:
