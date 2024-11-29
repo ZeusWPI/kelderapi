@@ -29,10 +29,14 @@ def get_shared_state(host, port, key):
 def kelder_open():
     subprocess.Popen(["mpv", "bootup.m4a"])
     publish.single("zigbee2mqtt/all/set", "on", hostname="localhost")
+    # see zigbee2other
+    #subprocess.Popen(["./screen.sh", "on"])
 
 def kelder_close():
     subprocess.Popen(["mpv", "shutdown.m4a"])
     publish.single("zigbee2mqtt/all/set", "off", hostname="localhost")
+    # see zigbee2other
+    #subprocess.Popen(["./screen.sh", "off"])
 
 
 app = Flask(__name__)
