@@ -1,9 +1,6 @@
 #!/bin/bash
 
-PLAYER_EVENT="changed"
-TRACK_ID="6rPO02ozF3bM7NnOV4h6s2"
-
-if [[ "$PLAYER_EVENT" != "changed" ]]; then
+if [[ "$PLAYER_EVENT" != "playing" ]]; then
   exit 0
 fi
 
