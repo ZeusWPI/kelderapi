@@ -62,4 +62,10 @@ def doorkeeper():
                 except:
                     return f"kelderapi crash\n{traceback.format_exc()}", 500
             shared_dict['last_state'] = new_lock_state
+        elif content['why'] == 'locking':
+            #play bomb plant sound when locking is in progress
+            try:
+                subprocess.Popen(["mpv", "--terminal=no", "csgobombplant.m4a"])
+            except:
+                return f"locking sound failed to play, no problem\n{traceback.format_exc()}", 500
     return "OK"
