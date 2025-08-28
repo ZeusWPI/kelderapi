@@ -1,14 +1,13 @@
 import os
 import requests
 
-if "PLAYER_EVENT" not in os.environ or os.environ["PLAYER_EVENT"] != "playing":
+if "PLAYER_EVENT" not in os.environ or os.environ["PLAYER_EVENT"] != "track_changed":
     exit(0)
 
 try:
-    requests.post('http://koin:8888/spotify', json={"track_id": str(os.environ['TRACK_ID'])})
+    requests.post('http://koin:9510/api/song', json={"spotify_id": str(os.environ['TRACK_ID'])})  # cammie scherm
 except Exception:
     pass
-
 
 
 import time
