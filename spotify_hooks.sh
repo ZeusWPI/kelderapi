@@ -28,6 +28,12 @@ lights_screen() {
 }
 
 
+screen() {
+    xh --ignore-stdin post http://localhost:9510/api/song "spotify_id=${TRACK_ID}"
+    # requests.post('http://koin:9510/api/song', json={"spotify_id": str(os.environ['TRACK_ID'])})  # cammie scherm
+}
+
+
 led_strip() {
     /opt/kelderapi/get_song_duration "$TRACK_ID" \
         | xargs -I {} curl \
@@ -73,13 +79,13 @@ mqtt_publish() {
 
 ### call functions here ###
 {
-    set -euo pipefail
+    # set -euo pipefail
     #set -x
     echo "===================="
     echo "Got event ${PLAYER_EVENT}"
 
-    echo "Running lights_screen"
-    lights_screen
+    echo "Running screen"
+    screen
 
     if [[ $PLAYER_EVENT = 'track_changed' ]]; then
         echo "Running led_strip"

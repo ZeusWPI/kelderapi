@@ -4,6 +4,7 @@ from flask import Flask, request
 from multiprocessing import Lock
 from multiprocessing.managers import AcquirerProxy, BaseManager, DictProxy
 import subprocess
+import time
 from enum import Enum
 import traceback
 import paho.mqtt.publish as publish
@@ -27,13 +28,15 @@ def get_shared_state(host, port, key):
     return manager.get_dict(), manager.get_lock()
 
 def kelder_open():
-    subprocess.Popen(["mpv", "--terminal=no", "bootup.m4a"])
     publish.single("zigbee2mqtt/all/set", "on", hostname="localhost")
+    time.sleep(1.5)
+    subprocess.Popen(["mpv", "--terminal=no", "bootup.m4a"])
     # see zigbee2other
     #subprocess.Popen(["./screen.sh", "on"])
 
 def kelder_close():
     subprocess.Popen(["mpv", "--terminal=no", "shutdown.m4a"])
+    time.sleep(1.5)
     publish.single("zigbee2mqtt/all/set", "off", hostname="localhost")
     # see zigbee2other
     #subprocess.Popen(["./screen.sh", "off"])
