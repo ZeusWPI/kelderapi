@@ -1,0 +1,17 @@
+[Unit]
+Description=Kelderapi
+After=network.target
+
+[Service]
+User=koin
+Group=koin
+Environment="XDG_RUNTIME_DIR=/run/user/1000"
+Environment="VIRTUAL_ENV=/opt/kelderapi/env"
+Environment="PATH=$VIRTUAL_ENV/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:$PATH"
+WorkingDirectory=/opt/kelderapi
+ExecStart=/opt/kelderapi/env/bin/python3 /opt/kelderapi/run_prod.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
