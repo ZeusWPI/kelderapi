@@ -10,3 +10,5 @@ elif [ x"$1" = x"off" ]; then
 else
     exit 1
 fi
+
+ssh zeus@keldermac scripts/screen.sh $@
