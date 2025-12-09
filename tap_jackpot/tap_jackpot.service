@@ -1,0 +1,12 @@
+[Unit]
+Description=Tap jackpot casino on sale
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/kelderapi/tap_jackpot/jackpot.sh
+Restart=always
+RuntimeMaxSec=24h
+
+[Install]
+WantedBy=default.target
