@@ -8,6 +8,7 @@ if [ x"$1" = x"on" ]; then
 elif [ x"$1" = x"off" ]; then
     xset dpms force off
 else
+    echo "Usage: $0 { on | off }" >&2
     exit 1
 fi
 
