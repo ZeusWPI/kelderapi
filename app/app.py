@@ -15,11 +15,9 @@ class LockState(Enum):
     INBETWEEN = '2'
 
 def get_shared_state(host, port, key):
-    shared_dict = {}
-    shared_lock = Lock()
     manager = BaseManager((host, port), key)
-    manager.register("get_dict", lambda: shared_dict, DictProxy)
-    manager.register("get_lock", lambda: shared_lock, AcquirerProxy)
+    manager.register("get_dict", dict, DictProxy)
+    manager.register("get_lock", Lock, AcquirerProxy)
     try:
         manager.get_server()
         manager.start()

@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+from multiprocessing import freeze_support
 
-from app import app
-app.run(debug=True)
+if __name__ == '__main__':
+    freeze_support()
+    from app import app
+    app.run(debug=True)
