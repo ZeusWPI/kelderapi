@@ -12,4 +12,4 @@ else
     exit 1
 fi
 
-ssh zeus@keldermac scripts/screen.sh $@
+ssh zeus@keldermac ./screen.sh $@
