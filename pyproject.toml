@@ -10,3 +10,5 @@ dependencies = [
     "paho-mqtt>=2.1.0",
     "requests>=2.32.5",
 ]
+[project.scripts]
+dev = "run_dev"

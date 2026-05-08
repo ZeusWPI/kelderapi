@@ -27,14 +27,12 @@ def get_shared_state(host, port, key):
 
 def kelder_open():
     publish.single("zigbee2mqtt/all/set", "on", hostname="mqtt")
-    time.sleep(1.5)
-    subprocess.Popen(["mpv", "--terminal=no", "bootup.m4a"])
     # see zigbee2other
     #subprocess.Popen(["./screen.sh", "on"])
 
 def kelder_close():
-    subprocess.Popen(["mpv", "--terminal=no", "shutdown.m4a"])
-    time.sleep(1.5)
+    publish.single("zigbee2mqtt/lights/set", "off", hostname="mqtt")
+    time.sleep(3)
     publish.single("zigbee2mqtt/all/set", "off", hostname="mqtt")
     # see zigbee2other
     #subprocess.Popen(["./screen.sh", "off"])

@@ -3,7 +3,7 @@ import paho.mqtt.client as mqtt
 import requests
 import subprocess
 
-broker_host = "localhost"
+broker_host = "mqtt.kelder.local"
 broker_port = 1883
 topics = [
     "kelderapi/leddy",
@@ -15,11 +15,11 @@ topics = [
 
 def screen_on():
     print("running \"screen.sh on\"")
-    subprocess.Popen(["/opt/kelderapi/screen.sh", "on"])
+    subprocess.Popen(["/opt/kelderapi/scripts/screen.sh", "on"])
 
 def screen_off():
     print("running \"screen.sh off\"")
-    subprocess.Popen(["/opt/kelderapi/screen.sh", "off"])
+    subprocess.Popen(["/opt/kelderapi/scripts/screen.sh", "off"])
 
 def on_message(client, userdata, msg):
     print(f'Received message on topic "{msg.topic}"')
@@ -38,11 +38,9 @@ def on_message(client, userdata, msg):
             action = payload_dict.get("action")
             state = payload_dict.get("state")
             if action == "on" or state == "ON":
-                print("running \"screen.sh on\"")
-                subprocess.Popen(["/opt/kelderapi/screen.sh", "on"])
+                screen_on()
             elif action == "off" or state == "OFF":
-                print("running \"screen.sh off\"")
-                subprocess.Popen(["/opt/kelderapi/screen.sh", "off"])
+                screen_off()
             else:
                 return
 
